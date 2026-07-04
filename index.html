@@ -9,14 +9,12 @@
     <style>
         body {
             font-family: 'Pretendard', sans-serif;
-            /* 프리미엄 다크 이벤트 배경 */
             background: linear-gradient(135deg, #0f172a 0%, #31135e 50%, #000000 100%);
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* 반투명 유리 질감 (글래스모피즘) */
         .glass-panel {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(16px);
@@ -26,7 +24,6 @@
             border-radius: 1.5rem;
         }
 
-        /* 로또 기계 돔 (유리구슬 느낌) */
         .machine-dome {
             position: relative;
             width: 280px;
@@ -36,14 +33,10 @@
             border: 4px solid rgba(255, 255, 255, 0.3);
             margin: 0 auto;
             overflow: hidden;
-            box-shadow: 
-                inset 0 0 40px rgba(0,0,0,0.9),
-                inset -20px -20px 50px rgba(255,255,255,0.15),
-                0 20px 50px rgba(0,0,0,0.6);
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.9), inset -20px -20px 50px rgba(255,255,255,0.15), 0 20px 50px rgba(0,0,0,0.6);
             z-index: 10;
         }
 
-        /* 호스(관) 스타일 */
         .machine-hose {
             width: 90px;
             height: 160px;
@@ -52,14 +45,13 @@
             border-right: 2px solid rgba(255,255,255,0.4);
             border-bottom-left-radius: 15px;
             border-bottom-right-radius: 15px;
-            margin: -10px auto 0 auto; /* 받침대와 겹치게 */
+            margin: -10px auto 0 auto; 
             position: relative;
             overflow: hidden;
             z-index: 5;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.4);
         }
 
-        /* 돔 안에 굴러다니는 작은 공들 - 부드러운 움직임으로 수정 */
         .scramble-ball {
             position: absolute;
             width: 28px;
@@ -72,12 +64,10 @@
             font-weight: 800;
             color: white;
             text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-            /* 움직임이 끊기지 않고 물 흐르듯 이어지도록 변경 */
             transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow: inset -3px -3px 6px rgba(0,0,0,0.4), 0 3px 6px rgba(0,0,0,0.4);
         }
 
-        /* 최종 당첨 공 스타일 */
         .lotto-ball-big {
             width: 80px;
             height: 80px;
@@ -95,12 +85,11 @@
             transform: scale(0);
         }
 
-        /* 호스를 타고 내려오는 공 애니메이션 */
         .ball-in-hose {
             position: absolute;
             top: 0;
             left: 50%;
-            margin-left: -35px; /* 너비 70px의 절반 */
+            margin-left: -35px;
             width: 70px;
             height: 70px;
             font-size: 1.75rem;
@@ -121,14 +110,12 @@
             100% { transform: scale(1) translateY(0); opacity: 1; }
         }
 
-        /* 번호별 색상 */
-        .color-1 { background: radial-gradient(circle at 30% 30%, #fbbf24, #b45309); color: #fff; } /* 1~10 노랑 */
-        .color-2 { background: radial-gradient(circle at 30% 30%, #60a5fa, #1d4ed8); } /* 11~20 파랑 */
-        .color-3 { background: radial-gradient(circle at 30% 30%, #f87171, #b91c1c); } /* 21~30 빨강 */
-        .color-4 { background: radial-gradient(circle at 30% 30%, #9ca3af, #374151); } /* 31~40 회색 */
-        .color-5 { background: radial-gradient(circle at 30% 30%, #34d399, #047857); } /* 41~45 초록 */
+        .color-1 { background: radial-gradient(circle at 30% 30%, #fbbf24, #b45309); color: #fff; } 
+        .color-2 { background: radial-gradient(circle at 30% 30%, #60a5fa, #1d4ed8); } 
+        .color-3 { background: radial-gradient(circle at 30% 30%, #f87171, #b91c1c); } 
+        .color-4 { background: radial-gradient(circle at 30% 30%, #9ca3af, #374151); } 
+        .color-5 { background: radial-gradient(circle at 30% 30%, #34d399, #047857); } 
 
-        /* 현황판 작은 공 스타일 */
         .mini-ball {
             width: 28px;
             height: 28px;
@@ -140,26 +127,21 @@
             font-size: 0.85rem;
             margin: 0 2px;
             color: #fff;
-            background: #4b5563; /* 기본 회색 */
             box-shadow: inset -2px -2px 4px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
         }
         .mini-ball.matched {
-            box-shadow: 0 0 10px rgba(251, 191, 36, 0.8), inset -2px -2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 0 15px rgba(253, 224, 71, 1), inset -2px -2px 4px rgba(0,0,0,0.3);
+            transform: scale(1.1);
         }
 
-        /* 황금빛 텍스트 그라데이션 */
         .text-gold {
             background: linear-gradient(to right, #fef08a, #f59e0b, #fef08a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0px 4px 15px rgba(245, 158, 11, 0.3);
         }
-        
-        tbody tr:hover {
-            background-color: rgba(255, 255, 255, 0.1) !important;
-        }
 
-        /* 인쇄 전용 스타일 (오프라인 번호표 출력용) */
         @media print {
             body * { visibility: hidden; }
             #print-section, #print-section * { visibility: visible; }
@@ -182,6 +164,9 @@
 </head>
 <body>
 
+    <!-- 음악 플레이어 태그 (화면엔 보이지 않음) -->
+    <audio id="bgm-player" loop></audio>
+
     <div class="max-w-5xl mx-auto px-4 py-10 relative z-20">
         
         <header class="text-center mb-12">
@@ -190,10 +175,10 @@
             </h1>
         </header>
 
-        <!-- 1. 초기 시작 섹션 (이미지 업로드 및 인쇄) -->
+        <!-- 1. 초기 시작 섹션 (이미지 업로드 및 메뉴) -->
         <section id="setup-section" class="glass-panel p-8 mb-8 text-center max-w-2xl mx-auto transition-all duration-500">
             
-            <div class="mb-8 border-2 border-dashed border-white/30 rounded-xl p-6 bg-white/5 hover:bg-white/10 transition relative group cursor-pointer overflow-hidden">
+            <div class="mb-4 border-2 border-dashed border-white/30 rounded-xl p-6 bg-white/5 hover:bg-white/10 transition relative group cursor-pointer overflow-hidden">
                 <input type="file" id="image-upload" accept="image/*" onchange="previewImage(event)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                 <div id="upload-placeholder" class="text-gray-300 group-hover:text-white transition">
                     <svg class="mx-auto h-12 w-12 mb-3 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -202,7 +187,16 @@
                     <p class="font-semibold text-lg">이곳을 클릭하여 행사 배너 이미지 업로드</p>
                     <p class="text-sm opacity-60 mt-1">한 번 업로드하면 새로고침해도 유지됩니다!</p>
                 </div>
-                <img id="image-preview" src="#" alt="미리보기" class="hidden w-full max-h-72 object-contain rounded-lg relative z-20 pointer-events-none drop-shadow-lg">
+                <img id="image-preview" src="#" alt="미리보기" class="hidden w-full max-h-72 object-contain mx-auto rounded-lg relative z-20 pointer-events-none drop-shadow-lg">
+            </div>
+
+            <!-- BGM 업로드 영역 추가 -->
+            <div class="mb-8 text-left bg-white/5 p-4 rounded-xl border border-white/10">
+                <label class="block text-gray-300 text-sm mb-2 font-semibold flex items-center">
+                    🎵 배경음악 (BGM) 추가 (선택사항)
+                </label>
+                <input type="file" id="bgm-upload" accept="audio/*" onchange="loadBGM(event)" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-purple-600 file:text-white hover:file:bg-purple-500 transition cursor-pointer">
+                <p class="text-xs text-gray-400 mt-2">긴장감 넘치는 mp3 파일을 넣으면 추첨장에서 음악이 재생됩니다.</p>
             </div>
             
             <div class="flex flex-col gap-4">
@@ -229,7 +223,6 @@
                     <p class="text-gray-300 mt-1 text-sm">25명 전원에게 행운의 번호 배정이 완료되었습니다.</p>
                 </div>
                 <div class="p-5">
-                    <!-- 2열 그리드 레이아웃 적용 -->
                     <div id="assign-grid" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
                         <!-- 자바스크립트로 배정 현황 렌더링 -->
                     </div>
@@ -243,8 +236,14 @@
         </section>
 
         <!-- 3. 기계 추첨 섹션 -->
-        <section id="draw-section" class="hidden transition-all duration-700">
-            <div class="glass-panel text-center p-8 mb-8 max-w-3xl mx-auto">
+        <section id="draw-section" class="hidden transition-all duration-700 relative">
+            
+            <!-- 음악 제어 버튼 (추첨장 우측 상단) -->
+            <button id="bgm-toggle-btn" onclick="toggleBGM()" class="hidden absolute -top-4 right-4 bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-full backdrop-blur-sm text-sm font-bold transition z-50">
+                🔊 BGM 켜짐
+            </button>
+
+            <div class="glass-panel text-center p-8 mb-8 max-w-3xl mx-auto mt-8">
                 <h2 id="winning-title" class="text-2xl md:text-3xl font-bold text-yellow-300 mb-8 animate-pulse drop-shadow-md">
                     당첨 번호를 뽑아주세요!
                 </h2>
@@ -297,11 +296,13 @@
         </section>
     </div>
 
-    <!-- 배경 장식용 흐릿한 원들 -->
-    <div class="fixed top-20 left-10 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-[100px] opacity-30 z-0 pointer-events-none"></div>
-    <div class="fixed bottom-20 right-10 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-[120px] opacity-20 z-0 pointer-events-none"></div>
+    <!-- 5. 커스텀 모달 (초기화 경고 및 인쇄 미리보기용) -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity">
+        <div id="modal-content" class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-8 text-gray-800 relative">
+        </div>
+    </div>
 
-    <!-- 5. 인쇄 전용 영역 (평소엔 숨김) -->
+    <!-- 6. 인쇄 전용 영역 -->
     <div id="print-section" class="hidden"></div>
 
     <script>
@@ -312,7 +313,6 @@
         let scrambleInterval = null;
         let isDrawing = false;
 
-        // 페이지 로드 시 저장된 이미지 및 티켓 내역 불러오기
         window.onload = () => {
             const savedImg = localStorage.getItem('lotto_bg_image');
             if (savedImg) {
@@ -321,14 +321,12 @@
                 img.classList.remove('hidden');
                 document.getElementById('upload-placeholder').classList.add('hidden');
             }
-
-            const savedState = localStorage.getItem('lotto_state');
-            if(savedState) {
+            if(localStorage.getItem('lotto_state')) {
                 document.getElementById('saved-status').classList.remove('hidden');
             }
         };
 
-        // 이미지 미리보기 및 저장
+        // 이미지 로드
         function previewImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -338,18 +336,38 @@
                     img.src = e.target.result;
                     img.classList.remove('hidden');
                     document.getElementById('upload-placeholder').classList.add('hidden');
-                    
-                    try {
-                        localStorage.setItem('lotto_bg_image', e.target.result);
-                    } catch(err) {
-                        console.warn("이미지 용량이 너무 커서 브라우저에 영구 저장하지 못했습니다.");
-                    }
+                    try { localStorage.setItem('lotto_bg_image', e.target.result); } 
+                    catch(err) { console.warn("이미지 용량이 너무 큽니다."); }
                 }
                 reader.readAsDataURL(file);
             }
         }
 
-        // --- 알고리즘 (로또 조작) ---
+        // BGM 로드 (브라우저 정책상 파일 용량이 클 수 있어 localStorage 저장은 생략)
+        function loadBGM(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                document.getElementById('bgm-player').src = url;
+            }
+        }
+
+        // BGM 켜기/끄기 토글
+        function toggleBGM() {
+            const bgm = document.getElementById('bgm-player');
+            const btn = document.getElementById('bgm-toggle-btn');
+            if(bgm.paused) {
+                bgm.play();
+                btn.innerHTML = '🔊 BGM 켜짐';
+                btn.classList.replace('text-gray-400', 'text-white');
+            } else {
+                bgm.pause();
+                btn.innerHTML = '🔇 BGM 꺼짐';
+                btn.classList.replace('text-white', 'text-gray-400');
+            }
+        }
+
+        // --- 알고리즘 ---
         function shuffle(array) {
             let currentIndex = array.length, randomIndex;
             while (currentIndex !== 0) {
@@ -388,10 +406,9 @@
             for(let i=0; i<5; i++) tickets.push({ nums: generateLottoNumbers(3), matches: 3, rank: 3 });
             for(let i=0; i<6; i++) tickets.push({ nums: generateLottoNumbers(2), matches: 2, rank: 4 });
             for(let i=0; i<7; i++) tickets.push({ nums: generateLottoNumbers(1), matches: 1, rank: 5 });
-            return shuffle(tickets);
+            return shuffle(tickets); 
         }
 
-        // 상태 유무 확인 후 필요시 생성 (저장 기능)
         function ensureStateExists() {
             const savedState = localStorage.getItem('lotto_state');
             if (savedState) {
@@ -414,61 +431,99 @@
             }
         }
 
-        // 전체 데이터 초기화
-        function resetEvent() {
-            if(confirm("저장된 이미지와 이미 발급된 티켓 번호를 모두 삭제하시겠습니까? (되돌릴 수 없습니다)")) {
-                localStorage.removeItem('lotto_state');
-                localStorage.removeItem('lotto_bg_image');
-                location.reload();
-            }
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
         }
 
-        // 인쇄 로직
+        function resetEvent() {
+            const modal = document.getElementById('custom-modal');
+            const content = document.getElementById('modal-content');
+            content.innerHTML = `
+                <div class="text-center">
+                    <div class="text-6xl mb-4">⚠️</div>
+                    <h3 class="text-3xl font-extrabold text-red-600 mb-4">초기화 경고</h3>
+                    <p class="text-lg text-gray-600 mb-8">저장된 행사 이미지와 발급된 번호를 모두 삭제하시겠습니까?</p>
+                    <div class="flex justify-center gap-4">
+                        <button onclick="closeModal()" class="px-8 py-4 bg-gray-200 hover:bg-gray-300 rounded-xl font-bold text-lg transition">취소하기</button>
+                        <button onclick="executeReset()" class="px-8 py-4 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-lg transition shadow-lg">확인 (초기화)</button>
+                    </div>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+        }
+
+        function executeReset() {
+            localStorage.removeItem('lotto_state');
+            localStorage.removeItem('lotto_bg_image');
+            window.location.reload();
+        }
+
         function printTickets() {
             ensureStateExists();
+            
+            const modal = document.getElementById('custom-modal');
+            const content = document.getElementById('modal-content');
+            
+            let html = '<h2 class="text-3xl font-extrabold text-center mb-2">🖨️ 오프라인 인쇄용 티켓 미리보기</h2>';
+            html += '<p class="text-center text-red-500 font-semibold mb-6">※ 인쇄는 코드를 파일로 저장 후 크롬에서 실행해 주세요.</p>';
+            
+            html += '<div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 bg-gray-100 p-6 rounded-xl max-h-[50vh] overflow-y-auto">';
+            globalFinalResults.forEach(res => {
+                const numsHtml = res.nums.map(n => `<span class="inline-block w-8 h-8 leading-8 text-center bg-white border border-gray-400 rounded-full mx-1 font-bold text-sm shadow-sm">${n}</span>`).join('');
+                html += `
+                    <div class="border-2 border-dashed border-gray-400 p-4 text-center rounded-lg bg-white shadow-sm">
+                        <strong class="text-lg block mb-3 text-indigo-800">${res.name}</strong>
+                        <div class="mb-2">${numsHtml}</div>
+                        <div class="text-xs text-gray-500 mt-2 font-medium">2026 도곡초 1학기 워크숍</div>
+                    </div>`;
+            });
+            html += '</div>';
+
+            html += `
+                <div class="flex justify-center gap-4 border-t border-gray-200 pt-6">
+                    <button onclick="closeModal()" class="px-8 py-4 bg-gray-500 hover:bg-gray-600 text-white rounded-xl font-bold text-lg transition">닫기</button>
+                    <button onclick="executePrint()" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-lg transition shadow-lg">브라우저 인쇄 실행</button>
+                </div>
+            `;
+            
+            content.innerHTML = html;
+            modal.classList.remove('hidden');
+        }
+
+        function executePrint() {
             const printSec = document.getElementById('print-section');
             let html = '<h2 style="text-align:center; font-size: 24px; margin-bottom: 30px;">도곡초 행운의 로또 번호표 (오프라인 배부용)</h2>';
             html += '<div>';
-            
             globalFinalResults.forEach(res => {
                 const numsHtml = res.nums.map(n => `<span class="print-ball">${n}</span>`).join('');
                 html += `
                     <div class="print-ticket">
                         <strong style="font-size: 18px; display:block; margin-bottom: 10px;">${res.name}</strong>
                         <div>${numsHtml}</div>
-                        <div style="font-size: 12px; margin-top: 10px; color: #666;">2026 도곡초 워크숍</div>
+                        <div style="font-size: 12px; margin-top: 10px; color: #666;">2026 도곡초 1학기 워크숍</div>
                     </div>`;
             });
             html += '</div>';
             
             printSec.innerHTML = html;
-            
-            // 브라우저 인쇄 다이얼로그 호출
             window.print();
         }
 
         // --- 화면 흐름 제어 ---
         function startEventAndAssign() {
-            ensureStateExists();
-
+            ensureStateExists(); 
             document.getElementById('setup-section').style.display = 'none';
             document.getElementById('assign-section').classList.remove('hidden');
-            
             renderAssignTable(globalFinalResults);
         }
 
         function renderAssignTable(results) {
             const grid = document.getElementById('assign-grid');
             grid.innerHTML = '';
-
             results.forEach((res, idx) => {
                 const item = document.createElement('div');
                 item.className = `flex justify-between items-center p-3 rounded-xl transition-colors duration-300 border border-white/10 hover:bg-white/10 ${idx % 2 === 0 ? 'bg-white/5' : 'bg-black/20'}`;
-
-                const numsHtml = res.nums.map(n => {
-                    return `<span class="mini-ball ${getColorClass(n)}">${n}</span>`;
-                }).join('');
-
+                const numsHtml = res.nums.map(n => `<span class="mini-ball ${getColorClass(n)}">${n}</span>`).join('');
                 item.innerHTML = `
                     <span class="font-bold text-white text-lg pl-2">${res.name}</span>
                     <div class="flex space-x-1">${numsHtml}</div>
@@ -481,6 +536,13 @@
             document.getElementById('assign-section').style.display = 'none';
             document.getElementById('draw-section').classList.remove('hidden');
             initMachine();
+
+            // 음악 재생 로직
+            const bgm = document.getElementById('bgm-player');
+            if (bgm.src) {
+                document.getElementById('bgm-toggle-btn').classList.remove('hidden');
+                bgm.play().catch(e => console.log("사용자 상호작용 부족으로 자동재생이 차단될 수 있습니다."));
+            }
         }
 
         function initMachine() {
@@ -539,7 +601,6 @@
             const bigBall = document.createElement('div');
             bigBall.className = `lotto-ball-big ${getColorClass(drawnNum)}`;
             bigBall.textContent = drawnNum;
-            bigBall.style.animation = 'popOut 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
             ballsContainer.appendChild(bigBall);
 
             currentWinningNumberIndex++;
@@ -570,6 +631,15 @@
             setTimeout(() => {
                 resultSection.classList.remove('opacity-0');
             }, 100);
+
+            // 결과 화면 나올 때 음악 정지 (선택 사항)
+            const bgm = document.getElementById('bgm-player');
+            const btn = document.getElementById('bgm-toggle-btn');
+            if (!bgm.paused) {
+                bgm.pause();
+                btn.innerHTML = '🔇 BGM 꺼짐';
+                btn.classList.replace('text-white', 'text-gray-400');
+            }
         }
 
         function renderFinalTable(results) {
@@ -590,7 +660,7 @@
 
                 const numsHtml = res.nums.map(n => {
                     const isMatch = currentWinningNumbers.includes(n);
-                    return `<span class="mini-ball ${isMatch ? getColorClass(n) + ' matched' : ''}">${n}</span>`;
+                    return `<span class="mini-ball ${getColorClass(n)} ${isMatch ? 'matched' : 'opacity-40'}">${n}</span>`;
                 }).join('');
 
                 tr.innerHTML = `
