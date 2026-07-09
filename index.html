@@ -13,7 +13,7 @@
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
-        }   
+        }
 
         .glass-panel {
             background: rgba(255, 255, 255, 0.05);
@@ -164,9 +164,6 @@
 </head>
 <body>
 
-    <!-- 음악 플레이어 태그 (화면엔 보이지 않음) -->
-    <audio id="bgm-player" loop></audio>
-
     <div class="max-w-5xl mx-auto px-4 py-10 relative z-20">
         
         <header class="text-center mb-12">
@@ -175,10 +172,10 @@
             </h1>
         </header>
 
-        <!-- 1. 초기 시작 섹션 (이미지 업로드 및 메뉴) -->
+        <!-- 1. 초기 시작 섹션 -->
         <section id="setup-section" class="glass-panel p-8 mb-8 text-center max-w-2xl mx-auto transition-all duration-500">
             
-            <div class="mb-4 border-2 border-dashed border-white/30 rounded-xl p-6 bg-white/5 hover:bg-white/10 transition relative group cursor-pointer overflow-hidden">
+            <div class="mb-8 border-2 border-dashed border-white/30 rounded-xl p-6 bg-white/5 hover:bg-white/10 transition relative group cursor-pointer overflow-hidden">
                 <input type="file" id="image-upload" accept="image/*" onchange="previewImage(event)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                 <div id="upload-placeholder" class="text-gray-300 group-hover:text-white transition">
                     <svg class="mx-auto h-12 w-12 mb-3 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -188,15 +185,6 @@
                     <p class="text-sm opacity-60 mt-1">한 번 업로드하면 새로고침해도 유지됩니다!</p>
                 </div>
                 <img id="image-preview" src="#" alt="미리보기" class="hidden w-full max-h-72 object-contain mx-auto rounded-lg relative z-20 pointer-events-none drop-shadow-lg">
-            </div>
-
-            <!-- BGM 업로드 영역 추가 -->
-            <div class="mb-8 text-left bg-white/5 p-4 rounded-xl border border-white/10">
-                <label class="block text-gray-300 text-sm mb-2 font-semibold flex items-center">
-                    🎵 배경음악 (BGM) 추가 (선택사항)
-                </label>
-                <input type="file" id="bgm-upload" accept="audio/*" onchange="loadBGM(event)" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-purple-600 file:text-white hover:file:bg-purple-500 transition cursor-pointer">
-                <p class="text-xs text-gray-400 mt-2">긴장감 넘치는 mp3 파일을 넣으면 추첨장에서 음악이 재생됩니다.</p>
             </div>
             
             <div class="flex flex-col gap-4">
@@ -237,11 +225,6 @@
 
         <!-- 3. 기계 추첨 섹션 -->
         <section id="draw-section" class="hidden transition-all duration-700 relative">
-            
-            <!-- 음악 제어 버튼 (추첨장 우측 상단) -->
-            <button id="bgm-toggle-btn" onclick="toggleBGM()" class="hidden absolute -top-4 right-4 bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-full backdrop-blur-sm text-sm font-bold transition z-50">
-                🔊 BGM 켜짐
-            </button>
 
             <div class="glass-panel text-center p-8 mb-8 max-w-3xl mx-auto mt-8">
                 <h2 id="winning-title" class="text-2xl md:text-3xl font-bold text-yellow-300 mb-8 animate-pulse drop-shadow-md">
@@ -326,7 +309,6 @@
             }
         };
 
-        // 이미지 로드
         function previewImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -340,30 +322,6 @@
                     catch(err) { console.warn("이미지 용량이 너무 큽니다."); }
                 }
                 reader.readAsDataURL(file);
-            }
-        }
-
-        // BGM 로드 (브라우저 정책상 파일 용량이 클 수 있어 localStorage 저장은 생략)
-        function loadBGM(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const url = URL.createObjectURL(file);
-                document.getElementById('bgm-player').src = url;
-            }
-        }
-
-        // BGM 켜기/끄기 토글
-        function toggleBGM() {
-            const bgm = document.getElementById('bgm-player');
-            const btn = document.getElementById('bgm-toggle-btn');
-            if(bgm.paused) {
-                bgm.play();
-                btn.innerHTML = '🔊 BGM 켜짐';
-                btn.classList.replace('text-gray-400', 'text-white');
-            } else {
-                bgm.pause();
-                btn.innerHTML = '🔇 BGM 꺼짐';
-                btn.classList.replace('text-white', 'text-gray-400');
             }
         }
 
@@ -536,13 +494,6 @@
             document.getElementById('assign-section').style.display = 'none';
             document.getElementById('draw-section').classList.remove('hidden');
             initMachine();
-
-            // 음악 재생 로직
-            const bgm = document.getElementById('bgm-player');
-            if (bgm.src) {
-                document.getElementById('bgm-toggle-btn').classList.remove('hidden');
-                bgm.play().catch(e => console.log("사용자 상호작용 부족으로 자동재생이 차단될 수 있습니다."));
-            }
         }
 
         function initMachine() {
@@ -631,15 +582,6 @@
             setTimeout(() => {
                 resultSection.classList.remove('opacity-0');
             }, 100);
-
-            // 결과 화면 나올 때 음악 정지 (선택 사항)
-            const bgm = document.getElementById('bgm-player');
-            const btn = document.getElementById('bgm-toggle-btn');
-            if (!bgm.paused) {
-                bgm.pause();
-                btn.innerHTML = '🔇 BGM 꺼짐';
-                btn.classList.replace('text-white', 'text-gray-400');
-            }
         }
 
         function renderFinalTable(results) {
